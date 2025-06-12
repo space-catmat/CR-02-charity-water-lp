@@ -1,47 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charity Water Landing Page</title>
-    <link rel="stylesheet" href="styles.css">
+  <!-- This sets the character encoding for the document -->
+  <meta charset="UTF-8" />
+  <!-- This makes the website look good on all devices by setting the viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- The title appears in the browser tab -->
+  <title>Charity Water</title>
+  <!-- This links to the external CSS file for styling -->
+  <link rel="stylesheet" href="styles.css"/>
+  <!-- Favicon: This adds a small icon in the browser tab -->
+  <!-- rel="icon" tells the browser this is a favicon -->
+  <!-- type="image/png" tells the browser the file type -->
+  <!-- href points to the location of the favicon image -->
+  <link rel="icon" type="img/png" href="img/water-can-transparent.png" />
+
+  <!-- Add a script for button toggle functionality -->
+  <script>
+    // This script lets students see which button is active and updates the UI
+    window.onload = function() {
+      var toggleButtons = document.querySelectorAll('.toggle button');
+      var sponsorBtn = document.getElementById('sponsor-project-btn');
+      var donateBtn = document.getElementById('donate-main-btn');
+      var dropdownBtn = document.getElementById('dropdown-btn');
+      var dropdownMenu = document.getElementById('dropdown-menu');
+      var dropdownWrapper = document.getElementById('navbar-dropdown');
+
+      // Function to update UI based on selected toggle
+      function updateUI(activeIndex) {
+        // Remove 'active' from both, add to the clicked one
+        toggleButtons.forEach(function(b, i) {
+          if (i === activeIndex) {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+
+        // Show sponsor button only for "Give Once"
+        if (activeIndex === 0) {
+          sponsorBtn.style.display = 'inline-block';
+          // Change main button text to "Give Now"
+          donateBtn.textContent = 'Give Now';
+        } else {
+          sponsorBtn.style.display = 'none';
+          // Change main button text to "Join the Mission"
+          donateBtn.textContent = 'Join the Mission';
+        }
+      }
+
+      // Add click event to both toggle buttons
+      toggleButtons.forEach(function(btn, idx) {
+        btn.onclick = function() {
+          updateUI(idx);
+        }
+      });
+
+      // Set initial state: if Monthly is active, hide sponsor button and set correct CTA text
+      if (toggleButtons[1].classList.contains('active')) {
+        sponsorBtn.style.display = 'none';
+        donateBtn.textContent = 'Join the Mission';
+      } else {
+        sponsorBtn.style.display = 'inline-block';
+        donateBtn.textContent = 'Give Now';
+      }
+
+      if (dropdownBtn) {
+        dropdownBtn.onclick = function() {
+          dropdownWrapper.classList.toggle('open');
+        };
+        document.addEventListener('click', function(e) {
+          if (!dropdownWrapper.contains(e.target)) {
+            dropdownWrapper.classList.remove('open');
+          }
+        });
+      }
+    }
+  </script>
+
+  <style>
+    /* Hide the dropdown by default */
+    .navbar-dropdown {
+      display: none;
+    }
+
+    /* Responsive: show dropdown and hide nav items when width < 750px */
+    @media (max-width: 750px) {
+      .navbar .navbar-nav {
+        display: none !important;
+      }
+      .navbar-dropdown {
+        display: block;
+        margin-right: auto;
+        margin-left: 0;
+      }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background: #fff;
+        min-width: 160px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        z-index: 1;
+        left: 10px;
+        top: 60px;
+        border-radius: 8px;
+        padding: 8px 0;
+      }
+      .navbar-dropdown.open .dropdown-content {
+        display: block;
+      }
+      .dropdown-content a {
+        display: block;
+        padding: 10px 20px;
+        color: #222;
+        text-decoration: none;
+      }
+      .dropdown-content a:hover {
+        background: #f0f0f0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Hero Section: This is the main banner at the top of the page -->
-    <section class="hero">
-        <!-- Main headline -->
-        <h1>Clean Water for Everyone</h1>
-        <!-- Subheadline -->
-        <p>Join us in bringing safe, clean water to communities in need.</p>
-    </section>
-
-    <!-- Story Section: This tells the story of the nonprofit -->
-    <section class="story">
-        <h2>Our Story</h2>
-        <p>
-         
-    </section>
-
-    <!-- Real-World Impact Story Section -->
-    <section class="impact-story">
-        <!-- Section headline -->
-        <h2>Real Impact: Meet Amina</h2>
-        <!-- Container for image and text -->
-        <div class="impact-content">
-            <!-- Impact image -->
-            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Amina smiling with clean water" class="impact-image">
-            <!-- Impact story text -->
-            <p>
-                Amina used to walk miles every day to collect water for her family. Thanks to your support, her village now has a clean water well. Amina can go to school and her family is healthier and happier.
-            </p>
+  <!-- Wrapper to move all content to the right -->
+  <div class="right-align-content">
+    <header class="navbar">
+      <!-- Flex container for dropdown, logo, and nav items -->
+      <div style="display: flex; align-items: center; justify-content: space-between; position: relative;">
+        <!-- Dropdown menu for small screens (hidden on large screens), on the left -->
+        <div class="navbar-dropdown" id="navbar-dropdown">
+          <!-- Hamburger icon button -->
+          <button id="dropdown-btn" style="background:none; border:none; font-size:28px; cursor:pointer;">
+            &#9776; <!-- Unicode hamburger icon -->
+          </button>
+          <!-- Dropdown content with nav links -->
+          <div class="dropdown-content" id="dropdown-menu">
+            <a href="#">Take Action</a>
+            <a href="#">Water Projects</a>
+            <a href="#">About Us</a>
+            <a href="#">Sign In</a>
+          </div>
         </div>
+        <!-- Logo stays in the center -->
+        <div class="logo" style="flex:0 0 auto;">
+          <img src="img/cw_logo-2.png" alt="Charity Water Logo">
+        </div>
+        <!-- Main navigation links and Sign In on the right (hidden on small screens) -->
+        <nav class="navbar-nav" style="flex:1; display: flex; justify-content: flex-end;">
+          <ul style="display: flex; gap: 32px; margin: 0; padding: 0; list-style: none;">
+            <li><a href="#">Take Action</a></li>
+            <li><a href="#">Water Projects</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Sign In</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero section with main message and donation form -->
+    <section class="hero">
+      <div class="overlay">
+        <div class="hero-text">
+          <!-- Main headline -->
+          <h1>Hope Flows Where Clean Water Goes</h1>
+          <!-- Short description about the charity's mission -->
+          <p>100% of your donation funds clean water projects for families in rural communities—every project is tracked and transparently shared with you.</p>
+
+          <!-- Donation form section -->
+          <div class="donation-form">
+            <!-- Toggle buttons for one-time or monthly donation -->
+            <div class="toggle">
+              <!-- Now 'Monthly' is the active button -->
+              <button>Give Once</button>
+              <button class="active">Monthly</button>
+            </div>
+
+            <!-- Donation amount buttons and input for custom amount -->
+            <div class="amounts">
+              <button>$10</button>
+              <button>$20</button>
+              <button>$40</button>
+              <button>$100</button>
+              <!-- The $ and input are inside the button, styled to fit nicely -->
+              <button style="display: inline-flex; align-items: center; padding: 5px 10px;">
+                $<input 
+                  type="text" 
+                  placeholder="Other amount" 
+                  style="width:60px; border:none; outline:none; margin-left:2px; font-size:1em; background:transparent;"
+                >
+              </button>
+            </div>
+
+            <!-- This button only shows when "Give Once" is selected -->
+            <button id="sponsor-project-btn" style="display:none; margin-top:10px;">
+              Sponsor an entire project
+            </button>
+
+            <!-- Main donation button, text will change with JS -->
+            <button class="donate-button" id="donate-main-btn">Join the Mission</button>
+            <!-- Tagline to encourage monthly donations -->
+            <p class="donation-tagline">Your monthly donation will change lives all year long.<br>100% fund water projects</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Call-to-Action Section: This encourages visitors to take action -->
-    <section class="call-to-action">
-        <h2>Make a Difference</h2>
-        <p>Your support can help save lives. Every donation brings us closer to a world with clean water for all.</p>
-        <a href="#" class="donate-button">Donate Now</a>
-    </section>
+    <!-- Add a new area below the placeholder image/logo -->
+    <!-- This div is 200px tall and can be used for more content or images -->
+    <div style="height:200px; background:#f5f5f5; margin-top:20px;">
+      <!-- This area is intentionally left blank for students to add content later -->
+      <!-- 200px tall area below the logo image -->
+    </div>
+  </div>
 </body>
 </html>
