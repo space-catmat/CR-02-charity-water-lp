@@ -23,6 +23,8 @@ Fonts:
   This CSS uses the provided color palette and beginner-friendly styles.
 */
 
+
+
 /* Set up the main font and background color for the whole page */
 body {
   background-color: #f4f8fb; /* Soft light blue for a fresh look */
@@ -40,7 +42,7 @@ body {
 }
 
 body, html {
-  font-family: 'Proxima Nova', 'Avenir', Arial, sans-serif; /* Use Proxima Nova first, then Avenir */
+  font-family: 'Proxima Nova', 'Avenir', 'Arial', 'sans-serif'; /* Use Proxima Nova first, then Avenir */
 }
 
 .navbar {
@@ -49,6 +51,7 @@ body, html {
   align-items: center;
   padding: 20px 40px;
   background-color: white;
+  border-bottom: 1px solid #000; /* Add a 2px border below the navbar */
 }
 
 .logo {
@@ -65,6 +68,7 @@ body, html {
   width: auto;  /* Keep the image aspect ratio */
   margin-right: 10px; /* Space between image and any text */
   padding-left: 50px; /* Add padding to the left of the logo */
+  padding-right: 50px; /* Add padding to the right of the logo */
 }
 
 nav ul {
@@ -74,25 +78,60 @@ nav ul {
 }
 
 nav a {
+  align-items: right;
   text-decoration: none;
   color: #000;
 }
 
+/* Hero section background image */
 .hero {
-  background-image: url('placeholder-image.jpg'); /* Replace with actual image path */
+  /* Set the background image from the img folder */
+  background-image: url('img/charity-water_hero-image.png');
+  /* Fallback background color if image doesn't load */
+  background-color: #cccccc;
+  /* Make the image cover the whole section */
   background-size: cover;
+  /* Center the background image */
   background-position: center;
+  /* Add some height so the image is visible */
+  min-height: 300px;
+  /* Remove padding so content is flush with the section edges */
+  padding: 0;
   color: white;
   height: 100vh;
   position: relative;
+  border-top: 1px solid #000000; /* Add a 2px border above the hero section */
 }
 
 .overlay {
-  background: rgba(0, 0, 0, 0.4);
+  /* Remove the dark overlay background */
+  background: none; /* No dark overlay */
   height: 100%;
   display: flex;
   align-items: center;
   padding: 40px;
+  justify-content: flex-end;
+}
+
+/* When the overlay has the .show-fullscreen class, it covers the whole screen */
+.overlay.show-fullscreen {
+  /* Make the overlay fill the whole screen */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* 100% of the viewport width */
+  height: 100vh; /* 100% of the viewport height */
+  background: white; /* White background for the overlay */
+  z-index: 2000; /* Make sure it is above everything else */
+  display: flex !important; /* Show the overlay as a flex container */
+  align-items: center; /* Center the donation box vertically */
+  justify-content: center; /* Center the donation box horizontally */
+  padding: 0;
+}
+
+/* Add a shadow to the donation box when overlay is fullscreen */
+.overlay.show-fullscreen .hero-text {
+  box-shadow: 0 4px 32px rgba(0,0,0,0.15);
 }
 
 .hero-text {
@@ -161,6 +200,9 @@ nav a {
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 10px;
+  border-radius: 8px;
+  /* Add a subtle shadow for a nice effect */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 .donation-tagline {
@@ -178,6 +220,7 @@ button:hover {
 /* Make all buttons have rounded corners for a softer look */
 button {
   border-radius: 8px; /* This rounds the edges of all buttons */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10); /* Subtle shadow for all buttons */
 }
 
 /* Make the left toggle button ("Give Once") square on the right side */
@@ -190,4 +233,78 @@ button {
 .toggle button:last-child {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+/* Make the 'Sponsor an entire project' button match the grey donation buttons */
+#sponsor-project-btn {
+  background-color: #f4f8fb; /* Same grey as the page background */
+  color: #222;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: normal;
+  cursor: pointer;
+  margin-top: 0px;   /* Less space above the button */
+  margin-bottom: 20px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* Add a hover effect like other buttons */
+#sponsor-project-btn:hover {
+  filter: brightness(90%);
+}
+
+/* Style for the Give Now button that appears when hamburger menu is visible */
+.give-now-mobile {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 90px; /* Below the navbar */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fbd300; /* Bright yellow */
+  color: #222;
+  border: none;
+  padding: 14px 36px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07); /* Existing shadow */
+  /* Add a subtle, slightly darker shadow for more depth */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Hide the Give Today button by default */
+.give-today-mobile {
+  display: none;
+  position: absolute;
+  top: 90px; /* Below the navbar */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fbd300; /* Bright yellow */
+  color: #222;
+  border: none;
+  padding: 14px 36px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+/* Show the Give Now button and hide overlay when hamburger menu is visible */
+@media (max-width: 820px) {
+  .overlay {
+    display: none;
+  }
+  .give-now-mobile {
+    display: block;
+  }
+  /* Show the Give Today button only when hamburger menu is visible (screen < 820px) */
+  .give-today-mobile {
+    display: block;
+  }
 }

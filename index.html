@@ -79,13 +79,26 @@
   </script>
 
   <style>
-    /* Hide the dropdown by default */
-    .navbar-dropdown {
-      display: none;
+    /* Always keep the navbar the same height */
+    .navbar {
+      max-height: 60px; /* Set a fixed minimum height for the navbar */
+      /* ...existing code... */
     }
 
-    /* Responsive: show dropdown and hide nav items when width < 750px */
-    @media (max-width: 750px) {
+    /* Make sure the hamburger menu button fills the navbar height */
+    .navbar-dropdown {
+      height: 60px; /* Match the navbar height */
+      display: none;
+      /* ...existing code... */
+    }
+    .navbar-dropdown button {
+      height: 100%; /* Make the button fill the dropdown area vertically */
+      display: flex;
+      align-items: center;
+    }
+
+    /* Responsive: show dropdown and hide nav items when width < 820px */
+    @media (max-width: 820px) {
       .navbar .navbar-nav {
         display: none !important;
       }
@@ -157,9 +170,22 @@
       </div>
     </header>
 
+    <!-- "Give Today" button for mobile, only appears when hamburger menu is visible -->
+    <button class="give-today-mobile" id="give-today-btn">
+      Give Today
+    </button>
+
     <!-- Hero section with main message and donation form -->
     <section class="hero">
-      <div class="overlay">
+      <!-- The overlay contains the donation box -->
+      <div class="overlay" id="donation-overlay">
+        <!-- Close button for the overlay, hidden by default -->
+        <button 
+          id="close-overlay-btn" 
+          style="display:none; position:absolute; top:20px; right:20px; background:#fff; border:none; font-size:24px; border-radius:50%; width:40px; height:40px; cursor:pointer; z-index:2100;"
+        >
+          &times; <!-- This is the "X" symbol -->
+        </button>
         <div class="hero-text">
           <!-- Main headline -->
           <h1>Hope Flows Where Clean Water Goes</h1>
@@ -175,7 +201,7 @@
               <button class="active">Monthly</button>
             </div>
 
-            <!-- Donation amount buttons and input for custom amount -->
+            <!-- Donation amount buttons, input for custom amount, and sponsor button all together -->
             <div class="amounts">
               <button>$10</button>
               <button>$20</button>
@@ -190,9 +216,8 @@
                 >
               </button>
             </div>
-
-            <!-- This button only shows when "Give Once" is selected -->
-            <button id="sponsor-project-btn" style="display:none; margin-top:10px;">
+            <!-- Sponsor button is now below the amounts area -->
+            <button id="sponsor-project-btn" style="display:none;">
               Sponsor an entire project
             </button>
 
@@ -212,5 +237,32 @@
       <!-- 200px tall area below the logo image -->
     </div>
   </div>
+  <!-- Script to show/hide the overlay when the Give Today button is pressed -->
+  <script>
+    // This code makes the overlay (donation box) cover the whole screen
+    // when the "Give Today" button is pressed on mobile.
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get the Give Today button and the overlay
+      var giveTodayBtn = document.getElementById('give-today-btn');
+      var overlay = document.getElementById('donation-overlay');
+      var closeBtn = document.getElementById('close-overlay-btn');
+
+      // If both elements exist, add click events
+      if (giveTodayBtn && overlay && closeBtn) {
+        // When Give Today is clicked, show the overlay and the close button
+        giveTodayBtn.onclick = function() {
+          overlay.classList.add('show-fullscreen'); // Add the fullscreen class
+          closeBtn.style.display = 'block'; // Show the close button
+          document.body.style.overflow = 'hidden'; // Prevent background scroll
+        };
+        // When the close button is clicked, hide the overlay and close button
+        closeBtn.onclick = function() {
+          overlay.classList.remove('show-fullscreen');
+          closeBtn.style.display = 'none';
+          document.body.style.overflow = '';
+        };
+      }
+    });
+  </script>
 </body>
 </html>
