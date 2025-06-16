@@ -51,7 +51,7 @@ body, html {
   align-items: center;
   padding: 20px 40px;
   background-color: white;
-  border-bottom: 1px solid #000; /* Add a 2px border below the navbar */
+  border-bottom: 1px solid #000; /* Add a 1px border below the navbar */
 }
 
 .logo {
@@ -74,7 +74,7 @@ body, html {
 nav ul {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 30px; /* Increased gap for more space between links */
 }
 
 nav a {
@@ -156,6 +156,14 @@ nav a {
 .donation-form {
   display: flex;
   flex-direction: column;
+  border-radius: 20px;
+  
+}
+
+/* Make all buttons in the donation form extra rounded for a friendly look */
+.donation-form button,
+.amounts button {
+  border-radius: 10px;
 }
 
 .toggle {
@@ -205,22 +213,48 @@ nav a {
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
+/* Make donation form buttons a bit darker on hover */
+.donation-form button:hover,
+.amounts button:hover {
+  filter: brightness(90%);
+}
+
 .donation-tagline {
   font-size: 14px;
   color: #555;
 }
 
-/* Add a hover effect to all buttons to make them a bit darker when hovered */
-button:hover {
-  /* This makes the button a little darker when the mouse is over it */
-  filter: brightness(90%);
-  cursor: pointer; /* Shows a pointer cursor on hover for better UX */
+/* Add a background color to the area behind the story section */
+.story-section-bg {
+  background-color: #8BD1CB; /* Brand light blue for the section background */
+  padding: 40px 0;           /* Space above and below the story box */
 }
 
-/* Make all buttons have rounded corners for a softer look */
-button {
-  border-radius: 8px; /* This rounds the edges of all buttons */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10); /* Subtle shadow for all buttons */
+/* Story box stays blue and centered */
+.story-section {
+  background-color: #2E9DF7; /* Brand blue for the story box */
+  color: #222;
+  padding: 40px 20px;
+  border-radius: 16px;        /* Slightly more rounded corners for a friendly look */
+  margin: 0 auto 32px auto;
+  max-width: 700px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10); /* Softer shadow */
+}
+
+/* Make the paragraph text in the story section white for readability */
+.story-section p {
+  color: #fff;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+/* Make sure headings in the story section stand out */
+.story-section h2 {
+  color: #fff;
+  margin-bottom: 18px;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 /* Make the left toggle button ("Give Once") square on the right side */
@@ -255,13 +289,14 @@ button {
   filter: brightness(90%);
 }
 
-/* Style for the Give Now button that appears when hamburger menu is visible */
-.give-now-mobile {
-  display: none; /* Hidden by default */
+/* Move the Give Today button to the right and slightly lower */
+.give-today-mobile {
+  display: none;
   position: absolute;
-  top: 90px; /* Below the navbar */
-  left: 50%;
-  transform: translateX(-50%);
+  top: 120px; /* Slightly lower on the page */
+  right: 40px; /* Move to the right side */
+  left: auto; /* Remove left centering */
+  transform: none; /* Remove centering transform */
   background-color: #fbd300; /* Bright yellow */
   color: #222;
   border: none;
@@ -271,8 +306,7 @@ button {
   border-radius: 8px;
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07); /* Existing shadow */
-  /* Add a subtle, slightly darker shadow for more depth */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
@@ -280,9 +314,10 @@ button {
 .give-today-mobile {
   display: none;
   position: absolute;
-  top: 90px; /* Below the navbar */
-  left: 50%;
-  transform: translateX(-50%);
+  top: 120px; /* Slightly lower on the page */
+  right: 40px; /* Move to the right side */
+  left: auto; /* Remove left centering */
+  transform: none; /* Remove centering transform */
   background-color: #fbd300; /* Bright yellow */
   color: #222;
   border: none;
@@ -307,4 +342,22 @@ button {
   .give-today-mobile {
     display: block;
   }
+}
+
+/* Make the hamburger menu button bigger and easier to see for beginners */
+.navbar-dropdown button {
+  font-size: 36px;      /* Make the hamburger icon larger */
+  background: none;     /* No background */
+  border: none;         /* No border */
+  color: #222;          /* Dark color for visibility */
+  padding: 8px 16px;    /* Add some padding for easier clicking */
+  border-radius: 8px;   /* Rounded corners for a friendly look */
+  box-shadow: none;     /* No shadow */
+  cursor: pointer;      /* Pointer cursor on hover */
+  transition: background 0.2s;
+}
+
+/* Add a simple hover effect for the hamburger menu */
+.navbar-dropdown button:hover {
+  background: #f4f8fb;  /* Light background on hover */
 }
